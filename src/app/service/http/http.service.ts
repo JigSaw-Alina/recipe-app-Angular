@@ -3,7 +3,7 @@ import { RecipeService } from './../../recipes/recipe.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../url';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,9 @@ export class HttpService {
             ingredients: elem.ingredients ? elem.ingredients : [],
           };
         });
+      }),
+      tap((res) => {
+        this.recipeService.setRecipe(res);
       })
     );
   }
