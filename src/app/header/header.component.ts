@@ -26,9 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onFethcData() {
-    this.http.fetchData().subscribe((res: any) => {
-      this.recipeService.setRecipe(res);
-    });
+    this.http.fetchData().subscribe();
     catchError((e) => {
       return throwError(e);
     });
