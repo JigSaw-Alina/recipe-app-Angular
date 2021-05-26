@@ -1,3 +1,4 @@
+import { RecipeService } from './../../recipes/recipe.service';
 import { Recipe } from './../../recipes/recipe.model';
 import { Injectable } from '@angular/core';
 import {
@@ -11,9 +12,17 @@ import { HttpService } from '../http/http.service';
   providedIn: 'root',
 })
 export class RecipeResolverService implements Resolve<Recipe[]> {
-  constructor(private http: HttpService) {}
+  constructor(
+    private http: HttpService,
+    private recipeService: RecipeService
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.http.fetchData();
+    let recipe = this.recipeService.getRecipes();
+    if (recipe.length === 0) {
+      return this.http.fetchData();
+    } else {
+      return recipe;
+    }
   }
 }
